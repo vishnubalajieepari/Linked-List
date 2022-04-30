@@ -1,0 +1,15 @@
+ListNode* reverseList(ListNode* head) {
+        if(!head)
+            return NULL;
+        ListNode *temp=NULL;  //taking new node initializing with NULL and return the node after completion of the process
+        ListNode *ptr=head;
+        ListNode *node;       // node which starts at next of the head node
+        while(ptr!=NULL)
+        {
+            node=ptr->next;
+            ptr->next=temp;
+            temp=ptr;
+            ptr=node;
+        }
+        return temp;
+    }
