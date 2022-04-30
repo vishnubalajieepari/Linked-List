@@ -1,0 +1,46 @@
+ ListNode *reverse(ListNode *ptr) // code for reversing the list
+    {
+        ListNode *temp=NULL;
+        ListNode *node;
+        while(ptr)
+        {
+            node=ptr->next;
+            ptr->next=temp;
+            temp=ptr;
+            ptr=node;
+        }
+        return temp;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if(left==right)                                                    // if both are same then return the head
+            return head;
+        ListNode *revl=NULL,*revr=NULL,*revl_prev=NULL,*revr_next=NULL;    //Assigning null values to previous of left, left, right and next of the right pointers.
+        int i=1;
+        ListNode* ptr=head;
+        while(ptr && i<=right)
+        {
+            if(i<left)               // storing left of the left pointer nodes in revl_prev node
+                revl_prev=ptr;
+            if(i==left)
+                revl=ptr;            // when it reaches left pointer then assign the node to revl pointer
+            if(i==right)
+            {
+                revr=ptr;           // when it reaches right pointer then assign the node to revr pointer 
+                revr_next=ptr->next; // Assigning the next of current node to right of the right pointer
+            }
+            ptr=ptr->next;
+            i++;
+        }
+        revr->next=NULL;
+        revr=reverse(revl);     // reversing the list from revl pointer to revr pointer using reverse function
+        if(revl_prev)           // if the starting node is not head then link the reversed nodes to rev_prev->next
+        {
+            revl_prev->next=revr;
+        }
+        else                        // if start is head then attach the reversed nodes directly to the head
+        {
+            head=revr;
+        }
+        revl->next=revr_next;
+        return head;
+    }
